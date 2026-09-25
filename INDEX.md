@@ -32,6 +32,7 @@ index of their own; the row for such a folder links to it.
 - [`about-me/games/README.md`](about-me/games/README.md)
 
 ## afterwords/ — what my guide wrote back after reading something I said.
+- [`afterwords/2026-09-25-the-first-recording.md`](afterwords/2026-09-25-the-first-recording.md) — Utah's Afterword after the first recording — private, owner-only
 - [`afterwords/README.md`](afterwords/README.md)
 
 ## domains/ — subjects with records accumulating that have not earned a room yet.
