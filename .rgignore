@@ -1,0 +1,7 @@
+# Search-noise exclusions. Everything here is generated from the records
+# themselves, so a search that matched it would only be matching a copy.
+# Nothing unique is hidden. Bypass when needed: rg --no-ignore
+INDEX.md
+*/INDEX.md
+record-ids.json
+people/constellation.json

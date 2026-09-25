@@ -1,0 +1,8 @@
+# Kept out of the record on purpose. A committed byte stays in this
+# repository's history for good, and none of these is a record of a life.
+.DS_Store
+Thumbs.db
+node_modules/
+.next/
+__pycache__/
+*.pyc
