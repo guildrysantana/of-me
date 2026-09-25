@@ -62,6 +62,7 @@ index of their own; the row for such a folder links to it.
 
 ## sources/ — the raw material everything else traces back to; `imported/` is what was brought in from elsewhere.
 - [`sources/README.md`](sources/README.md)
+- [`sources/dictations/2026-09-25-recording-6-57pm.md`](sources/dictations/2026-09-25-recording-6-57pm.md) — Guildry recording 2026-09-25 6:57pm
 - [`sources/dictations/2026-09-25-the-first-things-i-said.md`](sources/dictations/2026-09-25-the-first-things-i-said.md) — The first things I said
 
 ## stories/ — told anecdotes (a form, not a topic); `shelf.md` queues the untold ones.
