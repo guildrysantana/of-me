@@ -14,6 +14,7 @@ index of their own; the row for such a folder links to it.
 - [`README.md`](README.md) — what this store is.
 - [`extraction.md`](extraction.md)
 - [`getting-started.md`](getting-started.md)
+- [`record-ids.json`](record-ids.json)
 - [`records.md`](records.md)
 - [`register.md`](register.md)
 - [`sensitivity-preferences.md`](sensitivity-preferences.md) — how I want sensitive things handled.
@@ -60,6 +61,7 @@ index of their own; the row for such a folder links to it.
 
 ## sources/ — the raw material everything else traces back to; `imported/` is what was brought in from elsewhere.
 - [`sources/README.md`](sources/README.md)
+- [`sources/dictations/2026-09-25-the-first-things-i-said.md`](sources/dictations/2026-09-25-the-first-things-i-said.md) — The first things I said
 
 ## stories/ — told anecdotes (a form, not a topic); `shelf.md` queues the untold ones.
 - [`stories/README.md`](stories/README.md)
