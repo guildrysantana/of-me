@@ -1,0 +1,55 @@
+name: Check records against the contract
+
+# Warnings only, scoped to what each push changed. The rules live in
+# records.md and AGENTS.md; scripts/validate-records.mjs is the same rules as
+# checks. Nothing here ever blocks a push or edits a file.
+
+on:
+  # NO LONGER ON PUSH. `derived-files.yml` runs this same check as a step, on the
+  # same pushes, against the same diff — and a step inside a job that is already
+  # running costs its seconds instead of a whole billed minute. Kept as a file so
+  # it can still be run on demand over the whole house, which is the one thing the
+  # incremental step does not do.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-records
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    # Bounded because GitHub's default is SIX HOURS, and this repository has already
+    # paid it: run 32985137218 (land-on-main, 2026-08-26) sat for 4,005 minutes
+    # before somebody cancelled it. dispatch-only now, so it runs the whole house
+    # rather than a diff.
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check what this push changed
+        env:
+          BEFORE: ${{ github.event.before }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [ ! -f scripts/validate-records.mjs ]; then
+            echo "validator not in this house yet — nothing to run"
+            exit 0
+          fi
+          if [ "$EVENT" = "workflow_dispatch" ] || [ -z "$BEFORE" ] || ! git cat-file -e "$BEFORE" 2>/dev/null; then
+            node scripts/validate-records.mjs
+          else
+            git diff --name-only "$BEFORE" HEAD > /tmp/changed.txt
+            node scripts/validate-records.mjs --changed /tmp/changed.txt
+          fi
