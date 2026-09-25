@@ -1,0 +1,54 @@
+name: Regenerate derived files
+
+# INDEX.md is a projection of the repository, so no agent should have to maintain it.
+# This runs after every push — including commits made by ChatGPT or any other
+# connector, which write one file at a time and cannot batch a navigation update into
+# the same commit.
+#
+# Loop safety, belt and braces: (1) pushes that only touch the generated file are
+# ignored, and (2) commits pushed with GITHUB_TOKEN do not trigger further workflow
+# runs by GitHub's own design.
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "INDEX.md"
+      - "**/INDEX.md"
+      - "people/README.md"
+      - "people/constellation.json"
+      # The app maintains this one on every write too, byte-identically, so a
+      # commit that only moves it has nothing here left to regenerate.
+      - "record-ids.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: derived-files
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Rebuild the derived files
+        run: node scripts/build-derived.mjs
+
+      - name: Commit if anything changed
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing to commit — derived files already current."
+            exit 0
+          fi
+          git config user.name "of-me-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Regenerate derived files"
+          git push
