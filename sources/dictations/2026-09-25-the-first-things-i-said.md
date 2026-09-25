@@ -19,7 +19,8 @@ created_at: 2026-09-25
 provenance: Recorded into the Of Me recorder (dictation 257, from /setup) and transcribed by machine STT. No LLM in the capture path; the transcript is verbatim and uncorrected. Who is speaking is whatever the transcript shows — this line does not claim a single speaker.
 recorded_from: "/setup"
 source_refs: []
-derived_records: []
+derived_records:
+  - about-me/about.md
 ---
 
 # The first things I said
